@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-
+import psycopg2
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database_koments.db'
 
@@ -9,14 +9,12 @@ db = SQLAlchemy(app)
 
 # Определение модели Course
 
-
-
-
 class Course(db.Model):
     __tablename__ = 'courses'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
+    rating = db.Column(db.Float, nullable=True)  # Добавлено поле для оценки
 
 class Review(db.Model):
     __tablename__ = 'reviews'  # Имя таблицы в базе данных
@@ -54,22 +52,28 @@ def add_course():
     return render_template('add_course.html')
 
 if __name__ == '__main__':
+
     with app.app_context():
         try:
             db.create_all()
             print("Таблицы успешно созданы.")
-        except Exception as e:
-            print(f"Ошибка при создании таблиц: {e}")
-        # Проверка, существуют ли уже курсы, чтобы избежать дублирования
-        if Course.query.count() == 0:
-            # Добавление нескольких курсов
-            course1 = Course(name='Python для начинающих', description='Изучите основы программирования на Python.')
-            course2 = Course(name='Веб-разработка с Flask', description='Создание веб-приложений с использованием Flask.')
-            course3 = Course(name='Анализ данных с Pandas', description='Научитесь анализировать данные с помощью библиотеки Pandas.')
 
-            db.session.add(course1)
-            db.session.add(course2)
-            db.session.add(course3)
-            db.session.commit()
+        except psycopg2.OperationalError as e:
+            print(f"Ошибка подключения к базе данных: {e}")
+        except Exception as e:
+            print(f"Произошла ошибка: {e}")
+        
+        db.session.commit()
+    '''
+    if Course.query.count() == 0:
+        # Добавление нескольких курсов
+        course1 = Course(name='Python для начинающих', description='Изучите основы программирования на Python.')
+        course2 = Course(name='Веб-разработка с Flask', description='Создание веб-приложений с использованием Flask.')
+        course3 = Course(name='Анализ данных с Pandas', description='Научитесь анализировать данные с помощью библиотеки Pandas.')
+
+        db.session.add(course1)
+        db.session.add(course2)
+        db.session.add(course3)'''
+
 
     app.run(debug=True)
