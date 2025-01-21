@@ -1,19 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Courses</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Курсы</title>
 </head>
 <body>
-    <h1>IT Courses</h1>
-    <a href="{{ url_for('add_course') }}">Add Course</a>
-    <ul>
-        {% for course in courses %}
-            <li>
-                <a href="{{ url_for('course_detail', course_id=course.id) }}">{{ course.name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+    <div class="container mt-5">
+        <h1 class="text-center">Наши Курсы</h1>
+        <a href="{{ url_for('add_course') }}" class="btn btn-primary mb-3">Добавить курс</a>
+        <div class="row">
+            {% for course in courses %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.name }}</h5>
+                        <p class="card-text">{{ course.description }}</p>
+                        <p class="card-text"><strong>Оценка:</strong> {{ course.rating }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
