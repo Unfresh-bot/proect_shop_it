@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Courses</title>
+</head>
+<body>
+    <h1>IT Courses</h1>
+    <a href="{{ url_for('add_course') }}">Add Course</a>
+    <ul>
+        {% for course in courses %}
+            <li>
+                <a href="{{ url_for('course_detail', course_id=course.id) }}">{{ course.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

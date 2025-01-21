@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.name }}</title>
+</head>
+<body>
+    <h1>{{ course.name }}</h1>
+    <p>{{ course.description }}</p>
+
+    <h2>Reviews</h2>
+    <ul>
+        {% for review in course.reviews %}
+            <li>{{ review.review }} - Rating: {{ review.rating }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add Review</h2>
+    <form method="POST">
+        <textarea name="review" required></textarea>
+        <input type="number" name="rating" min="1" max="5" required>
+        <button type="submit">Submit Review</button>
+    </form>
+    <a href="{{ url_for('index') }}">Back to Courses</a>
+</body>
+</html>
