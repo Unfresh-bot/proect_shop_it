@@ -7,3 +7,4 @@ Project: a website with reviews of IT courses. Goals:
 3) save comments to the database
 4) connect everything into one
 Library: flask, flask_sqlalchemy
+To run a file locally, you need to run the file main.py
