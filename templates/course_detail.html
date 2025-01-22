@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>{{ course.name }}</title>
 </head>
 <body>
-    <h1>{{ course.name }}</h1>
-    <p>{{ course.description }}</p>
-
-    <h2>Reviews</h2>
-    <ul>
-        {% for review in course.reviews %}
-            <li>{{ review.review }} - Rating: {{ review.rating }}</li>
-        {% endfor %}
-    </ul>
-
-    <h2>Add Review</h2>
-    <form method="POST">
-        <textarea name="review" required></textarea>
-        <input type="number" name="rating" min="1" max="5" required>
-        <button type="submit">Submit Review</button>
-    </form>
-    <a href="{{ url_for('index') }}">Back to Courses</a>
+    <div class="container mt-5">
+        <h1>{{ course.name }}</h1>
+        <p>{{ course.description }}</p>
+        <h3>Отзывы</h3>
+        <ul class="list-group mt-3">
+            {% for review in course.reviews %}
+            <li class="list-group-item">
+                <strong>Оценка:</strong> {{ review.rating }}<br>
+                {{ review.content }}
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('review_course', course_id=course.id) }}" class="btn btn-primary mt-3">Оценить курс</a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Назад</a>
+    </div>
 </body>
 </html>
