@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Оценка курса: {{ course.name }}</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Оцените курс: {{ course.name }}</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="content">Ваш комментарий:</label>
+                <textarea id="content" name="content" class="form-control" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rating">Ваша оценка (1-10):</label>
+                <select id="rating" name="rating" class="form-control" required>
+                    {% for i in range(1, 11) %}
+                    <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+            <a href="{{ url_for('course_detail', course_id=course.id) }}" class="btn btn-secondary">Назад</a>
+        </form>
+    </div>
+</body>
+</html>
